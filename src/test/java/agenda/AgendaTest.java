@@ -4,14 +4,16 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 
 public class AgendaTest {
+
     Agenda agenda;
-    
+
     // November 1st, 2020
     LocalDate nov_1_2020 = LocalDate.of(2020, 11, 1);
 
@@ -20,6 +22,7 @@ public class AgendaTest {
 
     // November 1st, 2020, 22:30
     LocalDateTime nov_1__2020_22_30 = LocalDateTime.of(2020, 11, 1, 22, 30);
+    LocalDateTime nov_2__2020_22_30 = LocalDateTime.of(2020, 11, 2, 22, 30);
 
     // 120 minutes
     Duration min_120 = Duration.ofMinutes(120);
@@ -33,7 +36,7 @@ public class AgendaTest {
 
     // A Weekly Repetitive event ending after a give number of occurrrences
     RepetitiveEvent fixedRepetitions = new FixedTerminationEvent("Fixed termination weekly", nov_1__2020_22_30, min_120, ChronoUnit.WEEKS, 10);
-    
+
     // A daily repetitive event, never ending
     // November 1st, 2020, 22:30, 120 minutes
     RepetitiveEvent neverEnding = new RepetitiveEvent("Never Ending", nov_1__2020_22_30, min_120, ChronoUnit.DAYS);
@@ -46,12 +49,26 @@ public class AgendaTest {
         agenda.addEvent(fixedRepetitions);
         agenda.addEvent(neverEnding);
     }
-    
+
     @Test
     public void testMultipleEventsInDay() {
         assertEquals(4, agenda.eventsInDay(nov_1_2020).size(), "Il y a 4 événements ce jour là");
-       assertTrue(agenda.eventsInDay(nov_1_2020).contains(neverEnding));
+        assertTrue(agenda.eventsInDay(nov_1_2020).contains(neverEnding));
     }
 
+    @Test
+    public void testFindByTitle() {
+        List<Event> lesEvent = new ArrayList<Event>();
+        lesEvent.add(simple);
+        assertEquals(lesEvent, agenda.findByTitle("Simple event"), "On doit trouver un événement");
+    }
+
+    @Test
+    public void testIsFree() {
+        Event simple2 = new Event("Simple event 2", nov_1__2020_22_30, min_120);
+        assertFalse(agenda.isFreeFor(simple2), "Il n'y a pas de place");
+        Event simple3 = new Event("Simple event 3", nov_2__2020_22_30, min_120);
+        assertTrue(agenda.isFreeFor(simple3), "il y a de la place");
+    }
 
 }
