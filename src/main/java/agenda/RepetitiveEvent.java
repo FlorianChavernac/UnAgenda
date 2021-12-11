@@ -51,7 +51,7 @@ public class RepetitiveEvent extends Event {
             }
         }
         LocalDate start = myStart.toLocalDate();
-        while (date.isAfter(start)||date.equals(start)) {
+        while (date.isAfter(start) || date.equals(start)) {
             if (super.isInDay(start) == true) {
                 return true;
             }

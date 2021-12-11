@@ -66,13 +66,13 @@ public class FixedTerminationEvent extends RepetitiveEvent {
         long between = 0;
         LocalDate nStart = start.toLocalDate();
         if (frequency.equals(ChronoUnit.DAYS)) {
-            terminationInclusive = nStart.plusDays(numberOfOccurrences-1);
+            terminationInclusive = nStart.plusDays(numberOfOccurrences - 1);
         }
         if (frequency.equals(ChronoUnit.WEEKS)) {
-            terminationInclusive = nStart.plusWeeks(numberOfOccurrences-1);
+            terminationInclusive = nStart.plusWeeks(numberOfOccurrences - 1);
         }
         if (frequency.equals(ChronoUnit.MONTHS)) {
-            terminationInclusive = nStart.plusMonths(numberOfOccurrences-1);
+            terminationInclusive = nStart.plusMonths(numberOfOccurrences - 1);
         }
     }
 

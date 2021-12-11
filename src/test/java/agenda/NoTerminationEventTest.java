@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class NoTerminationEventTest {
+
     // November 1st, 2020
     LocalDate nov_1_2020 = LocalDate.of(2020, 11, 1);
 
@@ -28,22 +29,22 @@ public class NoTerminationEventTest {
 
     @Test
     public void eventIsNotInDayBefore() {
-        assertFalse(neverEnding.isInDay(nov_1_2020.minus(1, ChronoUnit.DAYS)),  "Un événement n'a pas lieu avant son jour de début");
+        assertFalse(neverEnding.isInDay(nov_1_2020.minus(1, ChronoUnit.DAYS)), "Un événement n'a pas lieu avant son jour de début");
     }
 
     @Test
     public void eventOccurs10DayAfter() {
-        assertTrue(neverEnding.isInDay(nov_1_2020.plus(10, ChronoUnit.DAYS)),  "Cet événement se produit tous les jours");
+        assertTrue(neverEnding.isInDay(nov_1_2020.plus(10, ChronoUnit.DAYS)), "Cet événement se produit tous les jours");
     }
-    
+
     @Test
     public void eventIsNotInExceptionDays() {
         neverEnding.addException(nov_1_2020.plus(2, ChronoUnit.DAYS)); // ne se produit pas à J+2
         neverEnding.addException(nov_1_2020.plus(4, ChronoUnit.DAYS)); // ne se produit pas à J+4
-        assertTrue(neverEnding.isInDay(nov_1_2020.plus(1, ChronoUnit.DAYS)),  "Cet événement se produit tous les jours");
+        assertTrue(neverEnding.isInDay(nov_1_2020.plus(1, ChronoUnit.DAYS)), "Cet événement se produit tous les jours");
         assertFalse(neverEnding.isInDay(nov_1_2020.plus(2, ChronoUnit.DAYS)), "Cet événement ne se produit pas à J+2");
-        assertTrue(neverEnding.isInDay(nov_1_2020.plus(3, ChronoUnit.DAYS)),  "Cet événement se produit tous les jours");
+        assertTrue(neverEnding.isInDay(nov_1_2020.plus(3, ChronoUnit.DAYS)), "Cet événement se produit tous les jours");
         assertFalse(neverEnding.isInDay(nov_1_2020.plus(4, ChronoUnit.DAYS)), "Cet événement ne se produit pas à J+4");
     }
-    
+
 }
